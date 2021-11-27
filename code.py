@@ -1,7 +1,9 @@
 import csv      
 
 customer_titles = None
-customers = None 
+customers = None
+products = []
+product_titles = None
 
 def readfile(file_name):
     data = []
@@ -22,7 +24,7 @@ def readfile(file_name):
 
 def get_customers():
     global customer_titles
-    global customer_details
+    global customers
     customer_titles, customers = readfile("Customers.csv")        
 
     customer_details = []
@@ -30,13 +32,29 @@ def get_customers():
         c = {"name": customer[0], "address": customer[1], "product": customer[2], "quantity": customer[3], "amount": customer[4]}
         customer_details.append(c)
     
-    print(customer_details)
+    #print(customer_details)
 
-    
-get_customers()
 
 def get_products():
-    pass
+    global product_titles
+    global products
+    product_titles, product_detais = readfile("Products.csv")
+
+    for product in product_detais:
+        p = {"name":product[0],"price":product[1]}
+        products.append(p)
+    
+    #print(products)
+
+get_customers()
+
+print()
+
+get_products()
+
+print(customers)
+print()
+print(products)
 
 # def total_amounts_due():
 #     customer()
@@ -46,3 +64,6 @@ def get_products():
 #     #     print()
 
 # total_amounts_due()
+
+
+
