@@ -1,76 +1,48 @@
 import csv      
 
-customers = open("Customers.csv")               #opens the required customers.csv file containing details of all customers
-nextLine = customers.readline()[:-1]            #reads the very first title line 
+customer_titles = None
+customers = None 
 
-titles = nextLine.split(sep=",")                   
-
-print(titles)
-cus = []
-
-products = open("Products.csv")
-next = products.readline()
-prod = []
-
-def customer():
+def readfile(file_name):
+    data = []
+    with open(file_name,encoding='utf-8-sig') as f:
+        nextLine = f.readline()[:-1]
+        titles = nextLine.split(",")
+        for nextLine in f.readlines():
+            data.append(nextLine[:-1].split(","))
     
-    global customers
-    global nextLine
-    global cus
-    global titles
+    return (titles, data)
 
-    dic1 = {}
 
-    while nextLine != "":
-        nextLine = customers.readline()[:-1]
-        x = nextLine.split(sep=",")
-        name = 0
 
-        for title in titles:
-            if name != 5:
-                dic1[title] = x[name]
-                name = name + 1
-            else:
-                name = 0
-        
-            print(dic1)
-            
+# print()
+# product_titles, products = readfile("Products.csv")
+# print("Product Titles", product_titles)
+# print("Products", products)
+
+def get_customers():
+    global customer_titles
+    global customer_details
+    customer_titles, customers = readfile("Customers.csv")        
+
+    customer_details = []
+    for customer in customers:
+        c = {"name": customer[0], "address": customer[1], "product": customer[2], "quantity": customer[3], "amount": customer[4]}
+        customer_details.append(c)
     
-        cus.append(dic1)
+    print(customer_details)
 
-    print(cus)
-
-
-
-def product():
-    global products
-    global next
-    global prod
-
-    while next != "":
-        next = products.readline()[:-1]
-        y = next.split(sep=",")
-        
-        dic2 = {y[0]:y[-1]}
-
-        prod.append(dic2)
     
-    #print(prod)
+get_customers()
 
+def get_products():
+    pass
 
-def total_amounts_due():
-    customer()
-    product()
+# def total_amounts_due():
+#     customer()
+#     #product()
 
-    for x in cus:
-        print()
+#     # for x in cus:
+#     #     print()
 
-total_amounts_due()
-
-
-
-
-
-
-
-
+# total_amounts_due()
