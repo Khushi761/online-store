@@ -36,6 +36,24 @@ def get_products():
         p = {"name":product[0],"price":int(product[1])}
         products.append(p)
 
+def total_amounts_due():
+    get_customers()
+    get_products()
+
+    for x in customers:     
+        for y in products:
+            if x["product"] == y["name"]:
+                price = y["price"]
+                qty = x["quantity"]
+                amount_to_pay = price * qty
+                amount_due = amount_to_pay - x["amount"]
+
+        
+        if amount_due == 0:
+            print("no amount is due")
+        else:
+            print(amount_due)
+
 get_customers()
 
 print()
@@ -45,15 +63,7 @@ get_products()
 
 
 
-def total_amounts_due():
-    get_customers()
-    get_products()
 
-    print(customers)
-    print()
-    print(products)
-
-total_amounts_due()
 #     # for x in cus:
 #     #     print()
 
