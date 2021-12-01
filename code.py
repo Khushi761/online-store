@@ -15,6 +15,7 @@ t = turtle.Turtle()
 def setup():
     sc = turtle.Screen()
     sc.setup(screen_x *2, screen_y*2)
+    sc.bgcolor("yellow")
     t.penup()
     t.hideturtle()
     t.setposition(390 - screen_x, screen_y - 50)
@@ -28,27 +29,73 @@ def read_data():
     total_amounts_due()
 
 def create_customer_table():
+    
+    margin_y = 95
+    print((len(customers)+1)*28)
+
     t.setposition(10 - screen_x, screen_y - 60)
     t.pendown()
     t.setposition(200 - screen_x, screen_y - 60)
     t.penup()
     
-    t.setposition(10 - screen_x, screen_y - 200)
+    t.setposition(10 - screen_x, screen_y - ((len(customers)+1)*40))
     t.pendown()
-    t.setposition(200 - screen_x, screen_y - 200)
+    t.setposition(200 - screen_x, screen_y - ((len(customers)+1)*40))
     t.penup()
 
-    t.setposition(10 - screen_x, screen_y - 200)
+    t.setposition(10 - screen_x, screen_y - ((len(customers)+1)*40))
     t.pendown()
     t.setposition(10 - screen_x, screen_y - 60)
     t.penup()
 
     t.setposition(200 - screen_x, screen_y - 60)
     t.pendown()
-    t.setposition(200 - screen_x, screen_y - 200)
+    t.setposition(200 - screen_x, screen_y - ((len(customers)+1)*40))
     t.penup()
 
-    pass
+    t.setposition(15 - screen_x, screen_y - 75)
+
+    t.write("Current customers", font=("Arial", 15, 'normal', 'bold', 'italic', 'underline'))
+
+    for x in customers:
+        name = x["name"]
+        t.setposition(15 - screen_x, screen_y - margin_y)
+        t.write(name, font=("Arial", 12, 'normal'))
+        margin_y = margin_y + 30
+    
+def create_product_table():
+    
+    margin_y = 95
+
+    t.setposition(250 - screen_x, screen_y - 60)
+    t.pendown()
+    t.setposition(440 - screen_x, screen_y - 60)
+    t.penup()
+    
+    t.setposition(250 - screen_x, screen_y - ((len(products)+1)*40))
+    t.pendown()
+    t.setposition(440 - screen_x, screen_y - ((len(products)+1)*40))
+    t.penup()
+
+    t.setposition(250 - screen_x, screen_y - ((len(products)+1)*40))
+    t.pendown()
+    t.setposition(250 - screen_x, screen_y - 60)
+    t.penup()
+
+    t.setposition(440 - screen_x, screen_y - 60)
+    t.pendown()
+    t.setposition(440 - screen_x, screen_y - ((len(products)+1)*40))
+    t.penup()
+
+    t.setposition(255 - screen_x, screen_y - 75)
+
+    t.write("Products you are selling", font=("Arial", 15, 'normal', 'bold', 'italic', 'underline'))
+
+    for x in products:
+        name = x["name"]
+        t.setposition(255 - screen_x, screen_y - margin_y)
+        t.write(name, font=("Arial", 12, 'normal'))
+        margin_y = margin_y + 30
 
 def readfile(file_name):
     data = []
@@ -111,6 +158,7 @@ def total_amounts_due():
 
 if __name__ == "__main__":
     setup()
-    #read_data()
+    read_data()
     create_customer_table()
+    create_product_table()
     turtle.mainloop()
