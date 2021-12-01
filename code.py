@@ -11,15 +11,38 @@ product_titles = None
 balances = None
 
 t = turtle.Turtle()
+#print(t.pensize(2))
+
 
 def setup():
     sc = turtle.Screen()
     sc.setup(screen_x *2, screen_y*2)
     sc.bgcolor("yellow")
-    t.penup()
     t.hideturtle()
+    set_border()
+    t.penup()
+    
     t.setposition(390 - screen_x, screen_y - 50)
     t.write("Store Dashboard", font=("Arial", 20, 'normal', 'bold', 'italic', 'underline'))
+
+def set_border():
+    t.penup()
+    t.pensize(5)
+    t.setposition(-screen_x + 6, screen_y-4)
+    t.pendown()
+    t.setposition(screen_x-10, screen_y-4)
+    t.setposition(screen_x- 10, -screen_y + 8)
+    t.setposition(-screen_x+6, -screen_y+ 8)
+    t.setposition(-screen_x+ 6, screen_y + 4)
+    t.penup()
+    t.setposition(-screen_x + 6, screen_y - 60)
+    t.pendown()
+    t.setposition(screen_x - 10, screen_y - 60)
+    t.penup()
+    t.setposition(screen_x - 350, screen_y - 60)
+    t.pendown()
+    t.setposition(screen_x - 350, -screen_y -8)
+    t.penup()
 
 def read_data():
     customer_filename = turtle.textinput("Customers Filename", "Please enter customer filename")
@@ -29,71 +52,69 @@ def read_data():
     total_amounts_due()
 
 def create_customer_table():
-    
-    margin_y = 95
-    print((len(customers)+1)*28)
+    margin_y = 120
 
-    t.setposition(10 - screen_x, screen_y - 60)
+    t.setposition(10 - screen_x, screen_y - 70)
     t.pendown()
-    t.setposition(200 - screen_x, screen_y - 60)
+    t.setposition(200 - screen_x, screen_y - 70)
     t.penup()
     
-    t.setposition(10 - screen_x, screen_y - ((len(customers)+1)*40))
+    t.setposition(10 - screen_x, screen_y - ((len(customers))*50))
     t.pendown()
-    t.setposition(200 - screen_x, screen_y - ((len(customers)+1)*40))
+    t.setposition(200 - screen_x, screen_y - ((len(customers))*50))
     t.penup()
 
-    t.setposition(10 - screen_x, screen_y - ((len(customers)+1)*40))
+    t.setposition(10 - screen_x, screen_y - ((len(customers))*50))
     t.pendown()
-    t.setposition(10 - screen_x, screen_y - 60)
+    t.setposition(10 - screen_x, screen_y - 70)
     t.penup()
 
-    t.setposition(200 - screen_x, screen_y - 60)
+    t.setposition(200 - screen_x, screen_y - 70)
     t.pendown()
-    t.setposition(200 - screen_x, screen_y - ((len(customers)+1)*40))
+    t.setposition(200 - screen_x, screen_y - ((len(customers))*50))
     t.penup()
 
-    t.setposition(15 - screen_x, screen_y - 75)
+    t.setposition(15 - screen_x, screen_y - 95)
 
     t.write("Current customers", font=("Arial", 15, 'normal', 'bold', 'italic', 'underline'))
 
     for x in customers:
         name = x["name"]
-        t.setposition(15 - screen_x, screen_y - margin_y)
+        t.setposition(25 - screen_x, screen_y - margin_y)
         t.write(name, font=("Arial", 12, 'normal'))
         margin_y = margin_y + 30
     
 def create_product_table():
     
-    margin_y = 95
+    margin_y = 120
 
-    t.setposition(250 - screen_x, screen_y - 60)
+    t.setposition(250 - screen_x, screen_y - 70)
     t.pendown()
-    t.setposition(440 - screen_x, screen_y - 60)
+    t.setposition(490 - screen_x, screen_y - 70)
     t.penup()
     
-    t.setposition(250 - screen_x, screen_y - ((len(products)+1)*40))
+    t.setposition(250 - screen_x, screen_y - ((len(products))*50))
     t.pendown()
-    t.setposition(440 - screen_x, screen_y - ((len(products)+1)*40))
+    t.setposition(490 - screen_x, screen_y - ((len(products))*50))
     t.penup()
 
-    t.setposition(250 - screen_x, screen_y - ((len(products)+1)*40))
+    t.setposition(250 - screen_x, screen_y - ((len(products))*50))
     t.pendown()
-    t.setposition(250 - screen_x, screen_y - 60)
+    t.setposition(250 - screen_x, screen_y - 70)
     t.penup()
 
-    t.setposition(440 - screen_x, screen_y - 60)
+    t.setposition(490 - screen_x, screen_y - 70)
     t.pendown()
-    t.setposition(440 - screen_x, screen_y - ((len(products)+1)*40))
+    t.setposition(490 - screen_x, screen_y - ((len(products))*50))
     t.penup()
 
-    t.setposition(255 - screen_x, screen_y - 75)
+    t.setposition(255 - screen_x, screen_y - 95)
 
     t.write("Products you are selling", font=("Arial", 15, 'normal', 'bold', 'italic', 'underline'))
 
     for x in products:
         name = x["name"]
-        t.setposition(255 - screen_x, screen_y - margin_y)
+        t.setposition(275 - screen_x, screen_y - margin_y)
         t.write(name, font=("Arial", 12, 'normal'))
         margin_y = margin_y + 30
 
