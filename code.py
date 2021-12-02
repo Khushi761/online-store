@@ -1,5 +1,6 @@
 import csv      
 import turtle
+from csv import writer
 
 
 screen_x = 475
@@ -9,10 +10,10 @@ customers = []
 products = []
 product_titles = None
 balances = None
+profit = 0
+people = 0
 
 t = turtle.Turtle()
-#print(t.pensize(2))
-
 
 def setup():
     sc = turtle.Screen()
@@ -45,10 +46,11 @@ def set_border():
     t.penup()
 
 def read_data():
-    customer_filename = turtle.textinput("Customers Filename", "Please enter customer filename")
-    product_filename = turtle.textinput("Products Filename", "Please enter products filename")
+    customer_filename = "Customers.csv"#turtle.textinput("Customers Filename", "Please enter customer filename")
+    product_filename = "Products.csv"#turtle.textinput("Products Filename", "Please enter products filename")
     get_customers(customer_filename)
     get_products(product_filename)
+    total_amounts_due()
     total_amounts_due()
 
 def create_customer_table():
@@ -118,6 +120,69 @@ def create_product_table():
         t.write(name, font=("Arial", 12, 'normal'))
         margin_y = margin_y + 30
 
+def create_amount_due_box():
+
+    margin_y = 150
+
+    t.setposition( screen_x - 300, screen_y - 70)
+    t.pendown()
+    t.setposition(screen_x - 90 , screen_y - 70)
+    t.penup()
+    
+    t.setposition(screen_x - 300, screen_y - (people*70))
+    t.pendown()
+    t.setposition(screen_x - 90, screen_y - (people*70))
+    t.penup()
+
+    t.setposition(screen_x - 300, screen_y - 70)
+    t.pendown()
+    t.setposition(screen_x - 300, screen_y - (people*70))
+    t.penup()
+
+    t.setposition(screen_x - 90, screen_y - 70)
+    t.pendown()
+    t.setposition(screen_x - 90, screen_y - (people*70))
+    t.penup()
+
+    t.setposition(screen_x - 290, screen_y - 95)
+
+    t.write("Amounts due by customers", font=("Arial", 15, 'normal', 'bold', 'italic', 'underline'))
+
+    f = open("Amounts.csv")
+    for nextLine in f.readlines():
+        t.setposition(screen_x - 290, screen_y - margin_y)
+        t.write(nextLine, font=("Arial", 12, 'normal'))
+        nextLine = f.readline()[:-1]
+        t.setposition(screen_x - 400, screen_y - margin_y)
+        t.write(nextLine, font=("Arial", 12, 'normal'))
+        margin_y = margin_y + 40
+
+def create_profit_box():
+    t.setposition( screen_x - 300, screen_y - 70)
+    t.pendown()
+    t.setposition(screen_x - 90 , screen_y - 70)
+    t.penup()
+    
+    t.setposition(screen_x - 300, screen_y - (len(products))*40)
+    t.pendown()
+    t.setposition(screen_x - 90, screen_y - (len(products))*40)
+    t.penup()
+
+    t.setposition(screen_x - 300, screen_y - 70)
+    t.pendown()
+    t.setposition(screen_x - 300, screen_y - (len(products))*40)
+    t.penup()
+
+    t.setposition(screen_x - 90, screen_y - 70)
+    t.pendown()
+    t.setposition(screen_x - 90, screen_y - (len(products))*40)
+    t.penup()
+def total_customers_box():
+    pass
+
+def total_products_box():
+    pass
+
 def readfile(file_name):
     data = []
     with open(file_name,encoding='utf-8-sig') as f:
@@ -150,8 +215,11 @@ def get_products(filename):
 
 def total_amounts_due():
     global balances
+    global people 
 
-    balances = {}
+    data = []
+    amounts = open("Amounts.csv", 'w')
+    #balances = {}
     for x in customers:
         amount_due = 0     
         for y in products:
@@ -160,26 +228,34 @@ def total_amounts_due():
                 qty = x["quantity"]
                 amount_to_pay = price * qty
                 amount_due = amount_to_pay - x["amount"]
+                if amount_due > 0:
+                    csv.writer(amounts).writerow([x["name"], str(amount_due)])
+                    people = people + 1
+                    print(people)
 
-        
-        balances[x["name"]] = amount_due
+def total_profits():
+    global profit
+    
+    for x in customers:
+        profit = profit + x["amount"]
 
-    #print(amount_due)
+def total_customers():
+    cus = 0
+    for c in customers:
+        cus = cus + 1
 
-# get_customers()
+def total_products():
+    prod = 0
+    for p in products:
+        prod = prod + 1
 
-# print()
-
-# get_products()
-
-# total_amounts_due()
-
-# print(balances)
-
+def total_customers():
+    pass
 
 if __name__ == "__main__":
     setup()
     read_data()
     create_customer_table()
     create_product_table()
+    create_amount_due_box()
     turtle.mainloop()
